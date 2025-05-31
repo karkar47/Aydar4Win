@@ -50,5 +50,6 @@ Aydar был разработан для максимальной удобнос
 - [karuchkar](https://github.com/karkar47)
 
 ## Источники
+Чем вдохновлялись и т.д.
 - [Яйцеоды](https://epicsusgames.ru)
 - [EY-Launcher](https://discord.gg/DQCdUA7Pgm)
