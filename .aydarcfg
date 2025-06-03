@@ -1,0 +1,5 @@
+[DEFAULT]
+theme = green
+isWelcomeWorked = False
+isPythonFile = True
+IgnoreUpdates = False
