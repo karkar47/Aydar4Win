@@ -61,9 +61,16 @@ class WelcomeSetup(ctk.CTk):
         slide2 = ctk.CTkFrame(self.slides_container)
         slide2.grid_columnconfigure(0, weight=1)
         
-        label2 = ctk.CTkLabel(slide2, text="Второй экран", font=("Arial", 24))
-        label2.grid(row=0, column=0, pady=20)
+        label2 = ctk.CTkLabel(slide2, text="Как вас зовут?", font=("Yu Gothic UI Light", 48))
+        label2.grid(row=0, column=0, sticky="n", pady=5)
+
+        entry2 = ctk.CTkEntry(slide2, placeholder_text="Введите имя")
+        entry2.grid(row=0, column=0, pady=150, ipadx=50, ipady=5, sticky='n', padx=20)
         
+        logo_user = ctk.CTkImage(light_image=Image.open("media/icons/png/aydar-200x200-user.png"), size=(200, 200))
+        logo_user_label = ctk.CTkLabel(slide2, image=logo_user, text="")
+        logo_user_label.grid(row=0, column=0, sticky="nw", padx=30, pady=90)
+
         self.slides.append(slide2)
         
 
@@ -71,12 +78,16 @@ class WelcomeSetup(ctk.CTk):
         slide3 = ctk.CTkFrame(self.slides_container)
         slide3.grid_columnconfigure(0, weight=1)
         
-        label3 = ctk.CTkLabel(slide3, text="Финальный экран", font=("Arial", 24))
-        label3.grid(row=0, column=0, pady=(40, 20))
+        label3 = ctk.CTkLabel(slide3, text="Какая тема вам лучше?", font=("Yu Gothic UI Light", 48))
+        label3.grid(row=0, column=0, sticky="n", pady=5)
         
-        entry = ctk.CTkEntry(slide3, placeholder_text="Введите что-нибудь")
-        entry.grid(row=1, column=0, pady=20, ipadx=50, ipady=5)
+        # entry3 = ctk.CTkEntry(slide3, placeholder_text="Введите что-нибудь")
+        # entry3.grid(row=0, column=0, pady=150, ipadx=50, ipady=5, sticky='n', padx=20)
         
+        choicethememenu = ctk.CTkOptionMenu(slide3, values=['Тёмная', 'Светлая'])
+        choicethememenu.grid(row=0, column=0, pady=150, ipadx=50, ipady=5, sticky='n', padx=20)
+        choicethememenu.set('Тёмная')
+
         self.slides.append(slide3)
     
     def show_slide(self, slide_index):
@@ -95,7 +106,7 @@ class WelcomeSetup(ctk.CTk):
         self.current_slide += 1
         
         if self.current_slide >= len(self.slides):
-            self.destroy()  # Более корректный выход, чем raise SystemExit
+            self.destroy()
             return
         
         self.show_slide(self.current_slide)

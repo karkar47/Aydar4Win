@@ -11,10 +11,11 @@ if os.path.exists(config_file):
         print(f"Ошибка при чтении конфига {e}")
 
 
-theme = config.get('DEFAULT', 'theme', fallback='green')
+theme = config.get('USERPROFILE', 'UserTheme', fallback='green')
 isWelcomeWorked = config.getboolean('DEFAULT', 'isWelcomeWorked', fallback=True)
 isPythonFile = config.getboolean('DEFAULT', 'isPythonFile', fallback=False)
 IgnoreUpdates = config.getboolean('DEFAULT', 'IgnoreUpdates', fallback=False)
+UserName = config.get('USERPROFILE', 'UserName', fallback=None)
 
 file_ext = '.exe' if isPythonFile == False else '.py'
 

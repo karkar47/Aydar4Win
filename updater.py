@@ -6,4 +6,4 @@ if isWelcomeWorked == False:
     try:
         os.system('welcome.py')
     except Exception as e:
-        print(f"Ошибка в запуске приветствия {e}")
+        print(f"Ошибка в запуске приветствия: {e}")

@@ -1,5 +1,12 @@
 [DEFAULT]
-theme = green
 isWelcomeWorked = False
 isPythonFile = True
 IgnoreUpdates = False
+
+[USERPROFILE]
+UserName = None
+UserNameLimit = 10
+UserTheme = green
+
+[SERVERS]
+C1 = http://f1051093.xsph.ru/tech/API/aydar/
