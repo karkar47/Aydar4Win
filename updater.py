@@ -1,4 +1,4 @@
-from config.cfg_parser import isWelcomeWorked, IgnoreUpdates, file_ext
+from utils.config_parser import isWelcomeWorked, IgnoreUpdates, file_ext
 import os
 import requests
 

@@ -1,12 +1,14 @@
 [DEFAULT]
-isWelcomeWorked = False
+isWelcomeWorked = True
 isPythonFile = True
 IgnoreUpdates = False
 
 [USERPROFILE]
-UserName = None
-UserNameLimit = 10
-UserTheme = green
+UserName = 
+UserTheme = dark
+UserColor = green
 
 [SERVERS]
-C1 = http://f1051093.xsph.ru/tech/API/aydar/
+C1 = http://f1051093.xsph.ru/tech/API/aydar
+ping = http://ping.archlinux.org
+

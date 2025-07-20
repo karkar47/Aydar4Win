@@ -1,15 +1,19 @@
 import customtkinter as ctk
 from PIL import Image
+from utils.config_parser import update_config
+
+# Шутка дня: Когда я зашел в Doki Doki Literature Club вскрылись две вещи: правда и Юри.
 
 class WelcomeSetup(ctk.CTk):
     def __init__(self):
         super().__init__()
         
-        # Настройки главного окна
+        # Настройки окна
         self.title("Добро пожаловать!")
         self.geometry("800x500")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
+        self.resizable(False, False)
 
         self.create_header()
         
@@ -24,7 +28,7 @@ class WelcomeSetup(ctk.CTk):
         self.current_slide = 0
         self.create_slides()
         
-        # Кнопка "Далее" (в отдельном фрейме)
+        # Кнопка продолжения (в отдельном фрейме)
         self.button_frame = ctk.CTkFrame(self)
         self.button_frame.grid(row=2, column=0, sticky="ew", padx=20, pady=(0, 20))
         self.button_frame.grid_columnconfigure(0, weight=1)
@@ -35,6 +39,7 @@ class WelcomeSetup(ctk.CTk):
         self.show_slide(0)
     
     def create_header(self):
+        # Хедер (типо отсылко на хтмл да да)
         header = ctk.CTkFrame(self, height=80, corner_radius=0)
         header.grid(row=0, column=0, sticky="ew")
         header.grid_columnconfigure(0, weight=1)
@@ -44,6 +49,10 @@ class WelcomeSetup(ctk.CTk):
         logo_label.grid(row=0, column=0, sticky="w", padx=20)
 
     def create_slides(self):
+
+        global rbutt_chosen_theme
+        global entry_entered_name
+
         # Слайд 1
         slide1 = ctk.CTkFrame(self.slides_container)
         slide1.grid_columnconfigure(0, weight=1)
@@ -66,6 +75,7 @@ class WelcomeSetup(ctk.CTk):
 
         entry2 = ctk.CTkEntry(slide2, placeholder_text="Введите имя")
         entry2.grid(row=0, column=0, pady=150, ipadx=50, ipady=5, sticky='n', padx=20)
+        entry_entered_name = entry2
         
         logo_user = ctk.CTkImage(light_image=Image.open("media/icons/png/aydar-200x200-user.png"), size=(200, 200))
         logo_user_label = ctk.CTkLabel(slide2, image=logo_user, text="")
@@ -81,12 +91,17 @@ class WelcomeSetup(ctk.CTk):
         label3 = ctk.CTkLabel(slide3, text="Какая тема вам лучше?", font=("Yu Gothic UI Light", 48))
         label3.grid(row=0, column=0, sticky="n", pady=5)
         
-        # entry3 = ctk.CTkEntry(slide3, placeholder_text="Введите что-нибудь")
-        # entry3.grid(row=0, column=0, pady=150, ipadx=50, ipady=5, sticky='n', padx=20)
-        
-        choicethememenu = ctk.CTkOptionMenu(slide3, values=['Тёмная', 'Светлая'])
-        choicethememenu.grid(row=0, column=0, pady=150, ipadx=50, ipady=5, sticky='n', padx=20)
-        choicethememenu.set('Тёмная')
+        rbutt_chosen_theme = ctk.StringVar(value='dark')
+
+        theme_rbutt1 = ctk.CTkRadioButton(slide3, text="Тёмная", variable=rbutt_chosen_theme, value='dark')
+        theme_rbutt1.grid(row=0, column=0, pady=140, ipadx=50, ipady=5, sticky='n', padx=20)
+
+        theme_rbutt2 = ctk.CTkRadioButton(slide3, text="Светлая", variable=rbutt_chosen_theme, value='light')
+        theme_rbutt2.grid(row=0, column=0, pady=180, ipadx=50, ipady=5, sticky='n', padx=20)
+
+        logo_user = ctk.CTkImage(light_image=Image.open("media/icons/png/aydar-200x200-user.png"), size=(200, 200))
+        logo_user_label = ctk.CTkLabel(slide3, image=logo_user, text="")
+        logo_user_label.grid(row=0, column=0, sticky="nw", padx=30, pady=90)
 
         self.slides.append(slide3)
     
@@ -105,7 +120,24 @@ class WelcomeSetup(ctk.CTk):
     def next_slide(self):
         self.current_slide += 1
         
+        global rbutt_chosen_theme
+        global entry_entered_name
+
+
         if self.current_slide >= len(self.slides):
+
+            config_changes = {
+                'DEFAULT': {
+                    'isWelcomeWorked': 'True'
+                },
+                'USERPROFILE': {
+                    'UserName': entry_entered_name.get(),
+                    'UserTheme': rbutt_chosen_theme.get()
+                }
+            }
+
+            update_config(config_changes)
+
             self.destroy()
             return
         
