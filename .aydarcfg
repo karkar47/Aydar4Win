@@ -1,10 +1,10 @@
 [DEFAULT]
-isWelcomeWorked = True
+isWelcomeWorked = False
 isPythonFile = True
 IgnoreUpdates = False
 
 [USERPROFILE]
-UserName = 
+UserName = Egg
 UserTheme = dark
 UserColor = green
 

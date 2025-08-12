@@ -43,9 +43,18 @@ Aydar - менеджер версий (лаунчер) нового поколе
 ### Зачем был разработан Aydar?
 Aydar был разработан для максимальной удобности и эффективности работы с игрой "Яйцеоды". Aydar перенёс все самые лучшие фишки из популярных лаунчеров, добавился красивый интерфейс и другие функции.
 
+## Known issues
+- Лаги с изменением размера окна
+- Проблемы с системой профилей
+
 ## To do
-- [x] Добавить крутое readme
-- [ ] Сделать хоть что-нибудь
+- [x] readme
+- [x] Make welcome
+- [x] Make updater
+- [x] Make profile system
+- [ ] Make auth 2 epicsus site system
+- [ ] Optimizate
+- [x] Create special version 4 linux (in public development)
 
 ## Команда проекта
 

@@ -23,7 +23,7 @@ class WelcomeSetup(ctk.CTk):
         self.slides_container.grid_columnconfigure(0, weight=1)
         self.slides_container.grid_rowconfigure(0, weight=1)
         
-        # Создаем слайды
+        # Слайды
         self.slides = []
         self.current_slide = 0
         self.create_slides()

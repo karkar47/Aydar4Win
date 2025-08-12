@@ -1,0 +1,11 @@
+#[EXAMPLE]
+#descr="Это пример, как должны выглядеть профили."
+#path2image="/media/icons/png/aydar.png"
+#path2exe="/profiles/Profile1/yaica.exe"
+
+[Profile1]
+name="zov"
+image="/media/icons/png/aydar-200x200-user.png"
+
+[Profile2]
+name="zdesw"
