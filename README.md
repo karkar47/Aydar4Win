@@ -1,6 +1,6 @@
-# Aydar
+# Aydar4Win
 
-![Aydar](https://github.com/karkar47/Aydar/blob/main/media/icons/png/aydar-full-white.png)
+![Aydar](https://raw.githubusercontent.com/karkar47/karkar47/refs/heads/main/icons/aydar-full-white-windows.png)
 
 Aydar - менеджер версий (лаунчер) нового поколения для игры "Яйцеоды". Написан на Python
 
