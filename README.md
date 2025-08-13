@@ -16,11 +16,11 @@ Aydar - менеджер версий (лаунчер) нового поколе
 - [Python 3.12.5](https://www.python.org/downloads/release/python-3125/)
 
 ## Использование
-Вы можете скачать готовую версию с сайта или с вкладки [releases](https://github.com/karkar47/Aydar/releases). Если же вам требуется скачать репозиторий и запустить его, следуйте этим шагам:
+Вы можете скачать готовую версию с сайта или с вкладки [releases](https://github.com/karkar47/Aydar4Win/releases). Если же вам требуется скачать репозиторий и запустить его, следуйте этим шагам:
 
 1. Скачайте репозиторий:
 ```sh
-> git clone https://github.com/karkar47/Aydar
+> git clone https://github.com/karkar47/Aydar4Win
 ```
 
 2. Установите зависимости:
