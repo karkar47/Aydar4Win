@@ -1,6 +1,6 @@
-# Aydar4Win
+# Aydar
 
-![Aydar](https://raw.githubusercontent.com/karkar47/karkar47/refs/heads/main/icons/aydar-full-white-windows.png)
+![Aydar](https://github.com/karkar47/Aydar/blob/main/media/icons/png/aydar-full-white.png)
 
 Aydar - менеджер версий (лаунчер) нового поколения для игры "Яйцеоды". Написан на Python
 
@@ -16,11 +16,11 @@ Aydar - менеджер версий (лаунчер) нового поколе
 - [Python 3.12.5](https://www.python.org/downloads/release/python-3125/)
 
 ## Использование
-Вы можете скачать готовую версию с сайта или с вкладки [releases](https://github.com/karkar47/Aydar4Win/releases). Если же вам требуется скачать репозиторий и запустить его, следуйте этим шагам:
+Вы можете скачать готовую версию с сайта или с вкладки [releases](https://github.com/karkar47/Aydar/releases). Если же вам требуется скачать репозиторий и запустить его, следуйте этим шагам:
 
 1. Скачайте репозиторий:
 ```sh
-> git clone https://github.com/karkar47/Aydar4Win
+> git clone https://github.com/karkar47/Aydar
 ```
 
 2. Установите зависимости:

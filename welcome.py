@@ -1,4 +1,5 @@
 import customtkinter as ctk
+import os
 from PIL import Image
 from utils.config_parser import update_config
 
@@ -8,6 +9,8 @@ class WelcomeSetup(ctk.CTk):
     def __init__(self):
         super().__init__()
         
+        self.iconbitmap("media/icons/ico/aydar-200x200-user.ico")
+
         # Настройки окна
         self.title("Добро пожаловать!")
         self.geometry("800x500")

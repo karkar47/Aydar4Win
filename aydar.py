@@ -1,26 +1,40 @@
 import customtkinter as ctk
 import webview
 from PIL import Image
-from utils.config_parser import UserName, isWelcomeWorked
-from utils.profile_parser import parse_profiles, sections
+from utils.config_parser import UserName, isWelcomeWorked, UserTheme
+from utils.profile_parser import parse_profiles, sections, create_profile, delete_profile
 import os
+
+# My fellow brothers, I, Billy Herrington, stand here today...
 
 class Aydar(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        if isWelcomeWorked == True:
-            os.startfile("welcome.py")
-            os._exit(os.EX_OK)
+        if isWelcomeWorked == False:
+            try:
+                os.startfile("welcome.exe")
+                os._exit(os.EX_OK)
+            except:
+                print("Welcome not found!")
+
+        try:
+            os.startfile("updater.exe")
+        except:
+            print("Updater not found!")
+
         # Настройка окна
         self.title(f"Привет, {UserName}! Чем займёмся сегодня?")
         self.geometry("800x600")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
 
-        # ctk.set_appearance_mode("Light")
+        self.iconbitmap("media/icons/ico/aydar-200x200-user.ico")
+
+        ctk.set_appearance_mode(UserTheme)
 
         self.profiles = []
+        self.selected_profiles = {}
 
         self.create_header()
         self.create_sidebar()
@@ -41,7 +55,7 @@ class Aydar(ctk.CTk):
         self.add_profile_ico = ctk.CTkImage(light_image=Image.open("media/icons/png/aydar-200x200-plus.png"), size=(25, 25))
         self.profile_ico = ctk.CTkImage(light_image=Image.open("media/icons/png/aydar-200x200-user.png"), size=(100, 100))
         self.settings_ico = ''
-        self.reference_ico = '' # справка
+        self.reference_ico = '' # справкa
 
         top_line = ctk.CTkFrame(header, height=0, fg_color='#7a7a7a', border_width=1)
         top_line.grid(row=0, column=0, columnspan=3, sticky='new')
@@ -74,9 +88,11 @@ class Aydar(ctk.CTk):
 
         left_line = ctk.CTkFrame(sidebar, width=0, fg_color='#7a7a7a', border_width=1)
         left_line.grid(row=0, rowspan=3, column=1, sticky='nws')
+
+        # start_profile_btn = ctk.CTkButton(sidebar, width=20, height=30, command=)
+        # start_profile_btn.grid(row=1, column=2, sticky='e')
     
     def create_profile_grid(self):
-        """Создает сетку для профилей в основном пространстве"""
         # Основной контейнер для сетки профилей
         self.profile_container = ctk.CTkFrame(self, fg_color="transparent")
         self.profile_container.grid(row=1, column=0, sticky="nsew", padx=(0, 200))  # Учитываем ширину sidebar
@@ -87,35 +103,34 @@ class Aydar(ctk.CTk):
         
         # Начальные профили (можно загрузить из конфига)
         self.load_sample_profiles()
-
-    def create_widgets(self):
-        """Создает элементы интерфейса"""
-        # Frame для списка профилей
-        self.profiles_frame = ctk.CTkScrollableFrame(self)
-        self.profiles_frame.pack(fill="both", expand=True, padx=10, pady=10)
     
     def load_sample_profiles(self):
+        parse_profiles_result = parse_profiles()
         for profile in sections:
-            self.add_profile_to_grid(profile)
+            self.add_profile_to_grid(profile, path2image=str(parse_profiles_result[profile]['path2image']))
 
-    
-    def add_profile_to_grid(self, name):
-        """Добавляет профиль в сетку"""
+    def add_profile_to_grid(self, name, path2image):
         # Создаем фрейм профиля
         profile_frame = ctk.CTkFrame(self.profile_container, width=150, height=180, bg_color='transparent', fg_color='transparent')
+
+        profile_frame.bind("<Double-Button-1>", self.on_doubleclick)
         
         # Позиция в сетке
         row = len(self.profiles) // 4
         col = len(self.profiles) % 4
         
         profile_frame.grid(row=row, column=col, padx=10, pady=10)
+
+        if path2image == "default":
+            profile_img = self.profile_ico
+        else:
+            profile_img = ctk.CTkImage(light_image=Image.open(path2image), size=(100, 100))
         
         # Добавляем иконку
-        # profile_img = ctk.CTkImage(
-        #     light_image=Image.open(image_path),
-        #     size=(100, 100))
-        img_label = ctk.CTkLabel(profile_frame, image=self.profile_ico, text="")
+        img_label = ctk.CTkLabel(profile_frame, image=profile_img, text="")
         img_label.pack(pady=(10, 5))
+
+        img_label.bind("<Double-Button-1>", lambda event: self.on_doubleclick(name=name))
         
         # Добавляем имя
         name_label = ctk.CTkLabel(profile_frame, text=name)
@@ -125,10 +140,11 @@ class Aydar(ctk.CTk):
         self.profiles.append(profile_frame)
     
     def add_profile_window(self):
-        """Окно добавления нового профиля"""
         add_profile_window = ctk.CTkToplevel(self)
         add_profile_window.geometry('400x300')
         add_profile_window.title("Добавить профиль")
+        # Костыль
+        add_profile_window.after(200, lambda: add_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
         
         # Поля для ввода
         ctk.CTkLabel(add_profile_window, text="Имя профиля:").pack(pady=5)
@@ -139,14 +155,18 @@ class Aydar(ctk.CTk):
         def save_profile():
             name = name_entry.get()
             if name:
-                self.add_profile_to_grid(name)
+                self.add_profile_to_grid(name, 'default')
+                create_profile(name, 'default')
                 add_profile_window.destroy()
         
-        ctk.CTkButton(
-            add_profile_window,
-            text="Сохранить",
-            command=save_profile
-        ).pack(pady=20)
+        ctk.CTkButton(add_profile_window, text="Сохранить", command=save_profile).pack(pady=20)
+
+    def on_oneclick(self, name):
+        pass
+
+    def on_doubleclick(self, name):
+        # event.widget.config(bg="lightgreen")
+        os.startfile(f'profiles\\{name}\\Яйцеоды 2.exe')
 
 
 if __name__ == '__main__':

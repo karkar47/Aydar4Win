@@ -1,14 +1,15 @@
 [DEFAULT]
-isWelcomeWorked = False
-isPythonFile = True
+isWelcomeWorked = True
+isPythonFile = False
 IgnoreUpdates = False
+Version = 0.2.4-alpha
 
 [USERPROFILE]
 UserName = Egg
-UserTheme = dark
+UserTheme = light
 UserColor = green
 
 [SERVERS]
-C1 = http://f1051093.xsph.ru/tech/API/aydar
-ping = http://ping.archlinux.org
+DownloadURL = http://epicsusgames.ru/games/Яйцеоды2.zip
+UpdateURL = https://github.com/karkar47/Aydar4Win/releases/download/Aydar-v
 

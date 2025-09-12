@@ -1,6 +1,5 @@
 from configparser import ConfigParser
 import os
-import platform
 
 config_file = '.aydarcfg'
 config = ConfigParser()
@@ -12,17 +11,15 @@ if os.path.exists(config_file):
     except Exception as e:
         print(f"Ошибка при чтении конфига {e}")
 
-# objects2check = ['profiles/.aydarprofiles', 'media/icons/png/aydar-140x45-white.png']
-
-# for obj in objects2check:
-#     print(os.path.exists(obj))
-
 isWelcomeWorked = config.getboolean('DEFAULT', 'isWelcomeWorked', fallback=True)
 isPythonFile = config.getboolean('DEFAULT', 'isPythonFile', fallback=False)
 IgnoreUpdates = config.getboolean('DEFAULT', 'IgnoreUpdates', fallback=False)
 UserTheme = config.get('USERPROFILE', 'UserTheme', fallback='dark')
 UserColor = config.get('USERPROFILE', 'UserColor', fallback='green')
 UserName = config.get('USERPROFILE', 'UserName', fallback='UnknownEgg')
+DownloadURL = config.get('SERVERS', 'DownloadURL', fallback='http://epicsusgames.ru/games/Яйцеоды2.zip')
+Version = config.get('DEFAULT', 'Version', fallback='0.0.0')
+UpdateURL = config.get('SERVERS', 'UpdateURL', fallback='https://github.com/karkar47/Aydar4Win/releases/download/Aydar-v')
 
 
 def update_config(changes: dict):

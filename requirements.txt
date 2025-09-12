@@ -2,3 +2,4 @@ requests
 customtkinter
 pillow
 pywebview
+zipfile
