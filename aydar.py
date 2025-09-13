@@ -1,7 +1,7 @@
 import customtkinter as ctk
 import webview
 from PIL import Image
-from utils.config_parser import UserName, isWelcomeWorked, UserTheme
+from utils.config_parser import UserName, isWelcomeWorked, UserTheme, Platform
 from utils.profile_parser import parse_profiles, sections, create_profile, delete_profile
 import os
 
@@ -11,15 +11,17 @@ class Aydar(ctk.CTk):
     def __init__(self):
         super().__init__()
 
+        exfile_ext = 'exe' if Platform == "Windows" else 'elf'
+
         if isWelcomeWorked == False:
             try:
-                os.startfile("welcome.exe")
+                os.startfile(f"welcome.{exfile_ext}")
                 os._exit(os.EX_OK)
             except:
                 print("Welcome not found!")
 
         try:
-            os.startfile("updater.exe")
+            os.startfile(f"updater.{exfile_ext}")
         except:
             print("Updater not found!")
 
@@ -34,7 +36,7 @@ class Aydar(ctk.CTk):
         ctk.set_appearance_mode(UserTheme)
 
         self.profiles = []
-        self.selected_profiles = {}
+        self.selected_profile = None
 
         self.create_header()
         self.create_sidebar()
@@ -86,22 +88,25 @@ class Aydar(ctk.CTk):
         sidebar.grid_rowconfigure(1, weight=1)
         sidebar.grid_rowconfigure(2, weight=1)
 
-        left_line = ctk.CTkFrame(sidebar, width=0, fg_color='#7a7a7a', border_width=1)
-        left_line.grid(row=0, rowspan=3, column=1, sticky='nws')
+        sidebar.grid_columnconfigure(0, weight=1)
+        sidebar.grid_columnconfigure(1, weight=1)
 
-        # start_profile_btn = ctk.CTkButton(sidebar, width=20, height=30, command=)
-        # start_profile_btn.grid(row=1, column=2, sticky='e')
+        left_line = ctk.CTkFrame(sidebar, width=0, fg_color='#7a7a7a', border_width=1)
+        left_line.grid(row=0, rowspan=3, column=0, sticky='nws')
+
+        start_profile_btn = ctk.CTkButton(sidebar, text="Аккаунт", fg_color='transparent', hover_color=("#a0a0a0", "#474747"), image=self.account_ico, width=90, text_color=('black', 'white'))
+        start_profile_btn.grid(row=1, columnspan=2, sticky='e')
     
     def create_profile_grid(self):
         # Основной контейнер для сетки профилей
         self.profile_container = ctk.CTkFrame(self, fg_color="transparent")
-        self.profile_container.grid(row=1, column=0, sticky="nsew", padx=(0, 200))  # Учитываем ширину sidebar
+        self.profile_container.grid(row=1, column=0, sticky="nsew", padx=(0, 200))
         
-        # Настройка сетки (4 колонки)
-        for i in range(4):
-            self.profile_container.grid_columnconfigure(i, weight=1)
-        
-        # Начальные профили (можно загрузить из конфига)
+        self.profile_container.grid_columnconfigure(0, weight=1)
+        self.profile_container.grid_columnconfigure(1, weight=1)
+        self.profile_container.grid_columnconfigure(2, weight=1)
+        self.profile_container.grid_columnconfigure(3, weight=1)
+
         self.load_sample_profiles()
     
     def load_sample_profiles(self):
@@ -130,11 +135,14 @@ class Aydar(ctk.CTk):
         img_label = ctk.CTkLabel(profile_frame, image=profile_img, text="")
         img_label.pack(pady=(10, 5))
 
+        img_label.bind("<Button-1>", lambda event, n=name: self.on_singleclick(n))
         img_label.bind("<Double-Button-1>", lambda event: self.on_doubleclick(name=name))
         
         # Добавляем имя
         name_label = ctk.CTkLabel(profile_frame, text=name)
-        name_label.pack()
+        name_label.pack(pady=1)
+
+        profile_frame.name = name # Ссылка для того, чтобы... бл как же я заебался, еще и живот болит. Пойду гачимучи-ремикс плейлист включю, полегче станет. Надеюсь никто не увидит (todo: delete this comment)
         
         # Сохраняем профиль
         self.profiles.append(profile_frame)
@@ -161,12 +169,22 @@ class Aydar(ctk.CTk):
         
         ctk.CTkButton(add_profile_window, text="Сохранить", command=save_profile).pack(pady=20)
 
-    def on_oneclick(self, name):
-        pass
+    def on_singleclick(self, name):
+    # Ну это штуко для того, чтобы когда вы кликали на профиль он выбирался и уро уро уро
+        if self.selected_profile:
+            self.selected_profile.configure(fg_color='transparent')
+        
+        for profile in self.profiles:
+            print(name)
+            if hasattr(profile, 'name') and profile.name == name:
+                profile.configure(fg_color=("#a0a0a0", "#474747"))
+                self.selected_profile = profile
+                break
 
     def on_doubleclick(self, name):
         # event.widget.config(bg="lightgreen")
-        os.startfile(f'profiles\\{name}\\Яйцеоды 2.exe')
+        yaica_path = f'profiles\\{name}\\Яйцеоды 2.exe' if Platform == "Windows" else f'profiles/{name}/Яйцеоды 2.exe'
+        os.startfile(yaica_path)
 
 
 if __name__ == '__main__':

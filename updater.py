@@ -15,7 +15,10 @@ def check_for_updates():
     ver_resp = requests.get(VersionURL)
     get_ver = ver_resp.text.strip("\n")
 
-    if get_ver > Version:
+    actual_ver_done = int(get_ver.replace(".", ""))
+    ver_done = int(Version.replace(".", ""))
+
+    if actual_ver_done > ver_done:
         try_update()
         return True
     else:

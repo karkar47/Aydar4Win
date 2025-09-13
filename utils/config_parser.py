@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+import platform
 import os
 
 config_file = '.aydarcfg'
@@ -20,6 +21,7 @@ UserName = config.get('USERPROFILE', 'UserName', fallback='UnknownEgg')
 DownloadURL = config.get('SERVERS', 'DownloadURL', fallback='http://epicsusgames.ru/games/Яйцеоды2.zip')
 Version = config.get('DEFAULT', 'Version', fallback='0.0.0')
 UpdateURL = config.get('SERVERS', 'UpdateURL', fallback='https://github.com/karkar47/Aydar4Win/releases/download/Aydar-v')
+Platform = platform.system()
 
 
 def update_config(changes: dict):
