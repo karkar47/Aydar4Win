@@ -1,4 +1,4 @@
-from utils.config_parser import IgnoreUpdates, Version, UpdateURL
+from utils.config_manager import IgnoreUpdates, Version, UpdateURL, Platform
 import os
 import requests
 from zipfile import ZipFile
@@ -6,7 +6,7 @@ from io import BytesIO
 from elevate import elevate
 from tkinter import messagebox
 
-DoneUpdateURL = UpdateURL + Version + '/w64.zip'
+DoneUpdateURL = UpdateURL + Version + '/win64.zip' if Platform == 'Windows' else '/lin64.zip'
 VersionURL = 'https://raw.githubusercontent.com/karkar47/karkar47/refs/heads/main/other/aydar/version'
 
 
@@ -33,16 +33,20 @@ def try_update():
     if dialog_answer:
         elevate()
 
-        os.system('taskkill /f /im aydar.exe')
-
+        command = 'taskkill /f /im aydar.exe' if Platform == 'Windows' else 'pkill -9 aydar'
+        os.system(command)
         os.mkdir("temp")
 
         with ZipFile(BytesIO(upd_resp.content)) as zip_file:
             zip_file.extractall('temp/')
         
-        os.replace('temp/w64/aydar.exe', 'aydar.exe')
-        os.replace('temp/w64/welcome.exe', 'welcome.exe')
-        os.replace('temp/w64/_internal', '_internal')
+        windows_to_update = {'aydar.exe': 'temp/w64/aydar.exe', 'welcome.exe': 'temp/w64/welcome.exe', '_internal': 'temp/w64/_internal'}
+        linux_to_update = {'aydar.exe': 'temp/w64/aydar.exe', 'welcome.exe': 'temp/w64/welcome.exe', '_internal': 'temp/w64/_internal'}
+        to_update = windows_to_update if Platform == 'Windows' else linux_to_update
+        for file in to_update:
+            if os.path.exists(to_update[file]):
+                os.replace(file, to_update[file])
+                
         os.rmdir('temp')
 
 

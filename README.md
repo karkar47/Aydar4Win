@@ -28,15 +28,6 @@ Aydar - менеджер версий (лаунчер) нового поколе
 > pip install -r requirements.txt
 ```
 
-### Требования
-Для установки и запуска проекта, необходим [Python 3.12.5](https://www.python.org/downloads/release/python-3125/).
-
-### Установка зависимостей
-Для установки зависимостей, выполните команду:
-```sh
-> pip install -r requirements.txt
-```
-
 ## FAQ 
 <!--В этом разделе вы можете найти ответы на самые часто задаваемые вопросы.-->
 
@@ -44,21 +35,32 @@ Aydar - менеджер версий (лаунчер) нового поколе
 Aydar был разработан для максимальной удобности и эффективности работы с игрой "Яйцеоды". Aydar перенёс все самые лучшие фишки из популярных лаунчеров, добавился красивый интерфейс и другие функции.
 
 ## Known issues
-- Лаги с изменением размера окна
-- Проблемы с системой профилей
+- ~~Лаги с изменением размера окна~~
+- ~~Проблемы с системой профилей~~
+- На некоторых дистрибутивах может что-то не работать ;(
 
 ## To do
 - [x] readme
 - [x] Make welcome
 - [x] Make updater
 - [x] Make profile system
-- [ ] Make auth 2 epicsus site system
+- [x] Make auth 2 epicsus site system
 - [ ] Optimizate
-- [x] Create special version 4 linux (in public development)
+- ~~[x] Create special version 4 linux (in public development)~~
+- [x] Make linux support
+- [x] Fix bug with russian profile names
+- [x] Make pass & email encryption
+- [x] Make new icons
+- [x] Make folder for .files (dotfiles)
+- [x] Make delete window
+- [ ] ~~Make auto login 2 epicsus site (simple_account_login())~~ Make epicsus site session check
+- [x] Make set icon window
 
-## Команда проекта
+## Команда проекта & Внесшие свой вклад люди
 
 - [karuchkar](https://github.com/karkar47)
+
+#### Именно **ВЫ** можете стать частью проекта, внеся вклад в него! Любая критика(а если критикуешь, предлагай что сделать) и правки приветствуются.
 
 ## Источники
 Чем вдохновлялись и т.д.

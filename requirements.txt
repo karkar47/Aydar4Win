@@ -2,4 +2,5 @@ requests
 customtkinter
 pillow
 pywebview
-zipfile
+elevate
+cryptography

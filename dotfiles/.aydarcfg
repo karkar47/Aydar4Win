@@ -1,8 +1,10 @@
+# Тут лазить можно. (Низкий уровень опасности)
 [DEFAULT]
 isWelcomeWorked = True
 isPythonFile = False
 IgnoreUpdates = False
 Version = 0.2.4
+ProtonFolder = 
 
 [USERPROFILE]
 UserName = Egg

@@ -2,9 +2,9 @@ from configparser import ConfigParser
 import platform
 import os
 
-config_file = '.aydarcfg'
+config_file = 'dotfiles/.aydarcfg'
 config = ConfigParser()
-config.optionxform = str # Позволяет сохранять регистр при сохранении конфига
+config.optionxform = str # Позволяет сохранять регистр при сохранении
 
 if os.path.exists(config_file):
     try:
@@ -22,6 +22,7 @@ DownloadURL = config.get('SERVERS', 'DownloadURL', fallback='http://epicsusgames
 Version = config.get('DEFAULT', 'Version', fallback='0.0.0')
 UpdateURL = config.get('SERVERS', 'UpdateURL', fallback='https://github.com/karkar47/Aydar4Win/releases/download/Aydar-v')
 Platform = platform.system()
+ProtonFolder = config.get('DEFAULT', 'ProtonFolder', fallback='')
 
 
 def update_config(changes: dict):

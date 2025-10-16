@@ -1,7 +1,6 @@
 import customtkinter as ctk
-import os
 from PIL import Image
-from utils.config_parser import update_config
+from utils.config_manager import update_config
 
 # Шутка дня: Когда я зашел в Doki Doki Literature Club вскрылись две вещи: правда и Юри.
 
@@ -109,14 +108,12 @@ class WelcomeSetup(ctk.CTk):
         self.slides.append(slide3)
     
     def show_slide(self, slide_index):
-        # Скрываем все слайды
-        for slide in self.slides:
-            slide.grid_forget()
+        # Паказываем слайдеке
+        # for slide in self.slides:
+        #     slide.grid_forget()
         
-        # Показываем нужный слайд
         self.slides[slide_index].grid(row=0, column=0, sticky="nsew")
         
-        # Обновляем текст кнопки
         btn_texts = ["Давайте", "Далее", "Завершить"]
         self.next_btn.configure(text=btn_texts[slide_index])
     
