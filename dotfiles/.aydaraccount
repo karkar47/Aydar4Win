@@ -3,9 +3,9 @@ BlockTrollVideo = True
 DevMode = False
 
 [ACCOUNT]
-AccountCookie =
-AccountName =
+AccountCookie = 
+AccountName = 
 is_logined_already = False
-AccountPass =
-AccountEmail =
+AccountPass = 
+AccountEmail = 
 

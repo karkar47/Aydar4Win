@@ -1,6 +1,6 @@
 # Тут лазить можно. (Низкий уровень опасности)
 [DEFAULT]
-isWelcomeWorked = True
+isWelcomeWorked = False
 isPythonFile = False
 IgnoreUpdates = False
 Version = 0.2.4

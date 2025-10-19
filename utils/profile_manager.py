@@ -81,3 +81,9 @@ def save_chosen_icon(path2image, profile):
 
     with open(profile_file, 'w', encoding='utf-8') as profilefile:
         profile_mgr.write(profilefile)
+
+def rename_profile(profile, name):
+    profile_mgr.set(profile, 'name', name)
+
+    with open(profile_file, 'w', encoding='utf-8') as profilefile:
+        profile_mgr.write(profilefile)

@@ -1,6 +1,6 @@
 # Aydar
 
-![Aydar](https://github.com/karkar47/Aydar/blob/main/media/icons/png/aydar-full-white.png)
+![Aydar](https://raw.githubusercontent.com/karkar47/karkar47/refs/heads/main/icons/aydar-full-white.png)
 
 Aydar - менеджер версий (лаунчер) нового поколения для игры "Яйцеоды". Написан на Python
 
@@ -46,15 +46,17 @@ Aydar был разработан для максимальной удобнос
 - [x] Make profile system
 - [x] Make auth 2 epicsus site system
 - [ ] Optimizate
-- ~~[x] Create special version 4 linux (in public development)~~
+- [ ] ~~Create special version 4 linux (in public development)~~
 - [x] Make linux support
 - [x] Fix bug with russian profile names
 - [x] Make pass & email encryption
 - [x] Make new icons
 - [x] Make folder for .files (dotfiles)
 - [x] Make delete window
-- [ ] ~~Make auto login 2 epicsus site (simple_account_login())~~ Make epicsus site session check
+- [ ] ~~Make auto login 2 epicsus site (simple_account_login())~~
+- [x] Make epicsus site session check
 - [x] Make set icon window
+- [x] Make rename window
 
 ## Команда проекта & Внесшие свой вклад люди
 

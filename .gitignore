@@ -9,4 +9,6 @@ venv/
 desktop.ini
 
 output
-profiles/
+aydar.spec
+dist
+build

@@ -1,8 +1,8 @@
 import customtkinter as ctk
 from tkinter import messagebox
 from PIL import Image
-from utils.config_manager import UserName, isWelcomeWorked, UserTheme, Platform, DownloadURL, ProtonFolder
-from utils.profile_manager import parse_profiles, profiles, number_of_profiles, create_profile, delete_profile, start_profile, open_profile_mods_folder, save_chosen_icon
+from utils.config_manager import UserName, isWelcomeWorked, UserTheme, Platform, DownloadURL, ProtonFolder, UserColor
+from utils.profile_manager import parse_profiles, profiles, number_of_profiles, create_profile, delete_profile, start_profile, open_profile_mods_folder, save_chosen_icon, rename_profile
 from utils.account_manager import account_login, open_account, check_account_session, is_logined_already, AccountName
 import multiprocessing
 import threading
@@ -14,17 +14,17 @@ class Aydar(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        exfile_ext = 'exe' if Platform == "Windows" else 'elf'
+        execfile_ext = 'exe' if Platform == "Windows" else 'elf'
 
         if isWelcomeWorked == False:
             try:
-                os.startfile(f"welcome.{exfile_ext}")
+                os.startfile(f"welcome.{execfile_ext}")
                 os._exit(os.EX_OK)
             except:
                 print("Welcome not found!")
 
         try:
-            os.startfile(f"updater.{exfile_ext}")
+            os.startfile(f"updater.{execfile_ext}")
         except:
             print("Updater not found!")
 
@@ -37,6 +37,7 @@ class Aydar(ctk.CTk):
         self.iconbitmap("media/icons/ico/aydar-200x200-user.ico")
 
         ctk.set_appearance_mode(UserTheme)
+        ctk.set_default_color_theme(UserColor)
 
         self.profiles = []
         self.selected_profile = None
@@ -109,7 +110,7 @@ class Aydar(ctk.CTk):
         left_line = ctk.CTkFrame(sidebar, width=0, fg_color='#7a7a7a', border_width=1)
         left_line.grid(row=0, rowspan=3, column=0, sticky='nws')
 
-        preview_frame = ctk.CTkFrame(sidebar, fg_color='lightgrey', height=150)
+        preview_frame = ctk.CTkFrame(sidebar, height=150)
         preview_frame.grid(row=0, column=0, pady=4, padx=4, sticky='wen')
 
         buttons_frame = ctk.CTkFrame(sidebar, fg_color='transparent')
@@ -124,10 +125,16 @@ class Aydar(ctk.CTk):
         self.set_icon_btn = ctk.CTkButton(buttons_frame, text="Сменить иконку", fg_color='transparent', hover_color=("#a0a0a0", "#474747"), image=self.settings_ico, anchor='w', height=30, text_color=('black', 'white'), state='disabled', command=lambda: self.set_icon_window())
         self.set_icon_btn.grid(sticky='wen', padx=5, pady=3)
 
+        self.rename_profile_btn = ctk.CTkButton(buttons_frame, text="Переименовать", fg_color='transparent', hover_color=("#a0a0a0", "#474747"), image=self.settings_ico, anchor='w', height=30, text_color=('black', 'white'), state='disabled', command=lambda: self.rename_profile_window(self.selected_profile.id))
+        self.rename_profile_btn.grid(sticky='wen', padx=5, pady=3)
+
         self.delete_profile_btn = ctk.CTkButton(buttons_frame, text="Удалить профиль", fg_color='transparent', hover_color=("#a0a0a0", "#474747"), image=self.delete_profile_ico, height=30, anchor='w', text_color=('black', 'white'), state='disabled', command=lambda: self.delete_profile_window_vanila(self.selected_profile.id))
         self.delete_profile_btn.grid(sticky='wen', padx=5, pady=3)
 
-        self.sidebar_buttons = [self.start_profile_btn, self.open_mods_btn, self.delete_profile_btn, self.set_icon_btn]
+#        self.reset_session_btn = ctk.CTkButton(buttons_frame, text="Сбросить сессию\nна сайте EpicSUS", fg_color='transparent', hover_color=("#a0a0a0", "#474747"), image=self.settings_ico, height=30, anchor='w', text_color='red', command=lambda: self.delete_profile_window_vanila(self.selected_profile.id))
+#        self.reset_session_btn.grid(sticky='wen', padx=5, pady=180)
+
+        self.sidebar_buttons = [self.start_profile_btn, self.open_mods_btn, self.delete_profile_btn, self.set_icon_btn, self.rename_profile_btn]
 
 
 
@@ -182,6 +189,7 @@ class Aydar(ctk.CTk):
         profile_frame.name = name # СсылОчко для того, чтобы мы смогли найти имя за пределами функции
         profile_frame.id = id
         profile_frame.image = img_label
+        profile_frame.label = name_label
         
         # Сохраняем профиль
         self.profiles.append(profile_frame)
@@ -201,10 +209,10 @@ class Aydar(ctk.CTk):
         name_entry = ctk.CTkEntry(add_profile_window)
         name_entry.pack(pady=1)
 
-        wait_label = ctk.CTkLabel(add_profile_window, text="Пожалуйста подождите")
+        wait_label = ctk.CTkLabel(add_profile_window, text="Пожалуйста, подождите")
 
         def on_close_warning():
-            messagebox.showwarning('Ахтунг!', 'Пожалуйста, подождите до окончания загрузки профиля.')
+            messagebox.showwarning('Ахтунг!', 'Пожалуйста, подождите до окончания загрузки профиля. Окно закроется автоматически, когда профиль загрузится.')
         
         # Кнопка сохранения
         def save_profile():
@@ -232,36 +240,67 @@ class Aydar(ctk.CTk):
         profile_image = self.selected_profile.image
         profile_image.configure(image=image)
 
-    def delete_profile_window_vanila(self, profile2remove):
+    def delete_profile_window_vanila(self, profile):
         dialog_answer = messagebox.askyesno("Удаление профиля", "Вы уверены, что хотите удалить профиль?")
         if dialog_answer:
             self.selected_profile.destroy()
             self.profiles.remove(self.selected_profile)
             self.deactivate_sidebar_buttons()
             
-            delete_profile(profile2remove)
+            delete_profile(profile)
             self.selected_profile = None
 
-
-    def delete_profile_window_custom(self):
-        delete_profile_window = ctk.CTkToplevel(self)
-        delete_profile_window.geometry('400x80')
-        delete_profile_window.title("Удалить профиль")
-        delete_profile_window.attributes('-topmost', True)
+    def rename_profile_window(self, profile):
+        rename_profile_window = ctk.CTkToplevel(self)
+        rename_profile_window.geometry('300x200')
+        rename_profile_window.title("Переименовать профиль")
+        rename_profile_window.attributes('-topmost', True)
         # Костыль
-        delete_profile_window.after(200, lambda: delete_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
+        rename_profile_window.after(200, lambda: rename_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
         
         # Поля для ввода
-        ctk.CTkLabel(delete_profile_window, text="Вы уверены, что хотите удалить профиль?").pack(pady=5)
+        name_label = ctk.CTkLabel(rename_profile_window, text="Новое имя профиля:")
+        name_label.pack(pady=5)
 
-        button_frame = ctk.CTkFrame(delete_profile_window)
-        button_frame.pack(side="right", padx=20, pady=20)
+        name_entry = ctk.CTkEntry(rename_profile_window)
+        name_entry.pack(pady=1)
 
-        yes_button = ctk.CTkButton(button_frame, text="Да")
-        yes_button.pack(side="left", padx=5)
+        wrong_name_label = ctk.CTkLabel(rename_profile_window, text="Пожалуйста, введите новое имя профиля.", text_color='red')
 
-        no_button = ctk.CTkButton(button_frame, text="Нет")
-        no_button.pack(side="left", padx=5)
+        def save_new_name():
+            name = name_entry.get()
+            if name:
+                profile_label = self.selected_profile.label
+                profile_label.configure(text=name)
+
+                rename_profile(profile, name)
+                rename_profile_window.destroy()
+            else:
+                wrong_name_label.pack(pady=3)
+
+        save_button = ctk.CTkButton(rename_profile_window, text="Сохранить", anchor='center', command=lambda: save_new_name())
+        save_button.pack(pady=5)
+
+
+    # def delete_profile_window_custom(self):
+    #     delete_profile_window = ctk.CTkToplevel(self)
+    #     delete_profile_window.geometry('400x80')
+    #     delete_profile_window.title("Удалить профиль")
+    #     delete_profile_window.attributes('-topmost', True)
+    #     # Костыль
+    #     delete_profile_window.after(200, lambda: delete_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
+        
+    #     # Поля для ввода
+    #     ctk.CTkLabel(delete_profile_window, text="Вы уверены, что хотите удалить профиль?").pack(pady=5)
+
+    #     button_frame = ctk.CTkFrame(delete_profile_window)
+    #     button_frame.pack(side="right", padx=20, pady=20)
+
+    #     yes_button = ctk.CTkButton(button_frame, text="Да")
+    #     yes_button.pack(side="left", padx=5)
+
+    #     no_button = ctk.CTkButton(button_frame, text="Нет")
+    #     no_button.pack(side="left", padx=5)
 
     def account_window(self):
         account_window = ctk.CTkToplevel(self)
@@ -310,7 +349,7 @@ class Aydar(ctk.CTk):
         
         for profile in self.profiles:
             if hasattr(profile, 'name') and profile.name == name:
-                profile.configure(fg_color=("#a0a0a0", "#474747"))
+                profile.configure(fg_color=("#cfcfcf", "#474747"))
                 self.selected_profile = profile
 
                 self.activate_sidebar_buttons()

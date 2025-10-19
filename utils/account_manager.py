@@ -79,7 +79,7 @@ def account_login(email, password):
     data = {"email": email, "password": password, "login": ""}
     response = session.post(url, data=data, headers=headers)
 
-    if "Неверные" in response.text:
+    if "Вход | EpicSUS ID" in response.text:
         return False
     else:
         encrypt_data(email=email, password=password, cookie=f'{session.cookies.get_dict()['PHPSESSID']}')
