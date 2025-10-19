@@ -1,6 +1,6 @@
 import customtkinter as ctk
 from tkinter import messagebox
-from PIL import Image
+from PIL import Image, ImageTk
 from utils.config_manager import UserName, isWelcomeWorked, UserTheme, Platform, DownloadURL, ProtonFolder, UserColor
 from utils.profile_manager import parse_profiles, profiles, number_of_profiles, create_profile, delete_profile, start_profile, open_profile_mods_folder, save_chosen_icon, rename_profile
 from utils.account_manager import account_login, open_account, check_account_session, is_logined_already, AccountName
@@ -34,7 +34,10 @@ class Aydar(ctk.CTk):
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
 
-        self.iconbitmap("media/icons/ico/aydar-200x200-user.ico")
+        # self.iconbitmap("media/icons/ico/aydar-200x200-user.ico")
+        img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-user.png"))
+        self.iconphoto(False, img)
+
 
         ctk.set_appearance_mode(UserTheme)
         ctk.set_default_color_theme(UserColor)
@@ -199,8 +202,12 @@ class Aydar(ctk.CTk):
         add_profile_window.geometry('300x200')
         add_profile_window.title("Добавить профиль")
         add_profile_window.attributes('-topmost', True)
+        add_profile_window.resizable(False, False)
         # Костыль
-        add_profile_window.after(200, lambda: add_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
+        # add_profile_window.after(200, lambda: add_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
+
+        img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-plus.png"))
+        add_profile_window.iconphoto(False, img)        
         
         # Поля для ввода
         name_label = ctk.CTkLabel(add_profile_window, text="Имя профиля:")
@@ -255,8 +262,12 @@ class Aydar(ctk.CTk):
         rename_profile_window.geometry('300x200')
         rename_profile_window.title("Переименовать профиль")
         rename_profile_window.attributes('-topmost', True)
+        rename_profile_window.resizable(False, False)
         # Костыль
-        rename_profile_window.after(200, lambda: rename_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
+        # rename_profile_window.after(200, lambda: rename_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
+
+        img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-plus.png"))
+        rename_profile_window.iconphoto(False, img)
         
         # Поля для ввода
         name_label = ctk.CTkLabel(rename_profile_window, text="Новое имя профиля:")
@@ -309,7 +320,10 @@ class Aydar(ctk.CTk):
         account_window.attributes('-topmost', True)
 
         # Костыль
-        account_window.after(200, lambda: account_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
+        # account_window.after(200, lambda: account_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
+
+        img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-plus.png"))
+        account_window.iconphoto(False, img)
 
         if is_logined_already:
             pass
@@ -360,14 +374,14 @@ class Aydar(ctk.CTk):
         start_profile(Platform, id, ProtonFolder)
     
     def activate_sidebar_buttons(self):
-        if self.start_profile_btn.cget('state') != 'normal':
-            for button in self.sidebar_buttons:
-               button.configure(state='normal')
+        # if self.start_profile_btn.cget('state') != 'normal':
+        for button in self.sidebar_buttons:
+            button.configure(state='normal')
 
     def deactivate_sidebar_buttons(self):
-        if self.start_profile_btn.cget('state') != 'disable':
-            for button in self.sidebar_buttons:
-               button.configure(state='disable')
+        # if self.start_profile_btn.cget('state') != 'disable':
+        for button in self.sidebar_buttons:
+            button.configure(state='disabled')
 
 
 if __name__ == '__main__':

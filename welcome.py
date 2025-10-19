@@ -1,5 +1,6 @@
 import customtkinter as ctk
-from PIL import Image
+from PIL import Image, ImageTk
+import os
 from utils.config_manager import update_config
 
 # Шутка дня: Когда я зашел в Doki Doki Literature Club вскрылись две вещи: правда и Юри.
@@ -7,8 +8,9 @@ from utils.config_manager import update_config
 class WelcomeSetup(ctk.CTk):
     def __init__(self):
         super().__init__()
-        
-        self.iconbitmap("media/icons/ico/aydar-200x200-user.ico")
+
+        img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-user.png"))
+        self.iconphoto(False, img)
 
         # Настройки окна
         self.title("Добро пожаловать!")
@@ -139,6 +141,8 @@ class WelcomeSetup(ctk.CTk):
             update_config(config_changes)
 
             self.destroy()
+            if os.name == 'posix':
+                os.system('python additional/linux_proton.py')
             return
         
         self.show_slide(self.current_slide)

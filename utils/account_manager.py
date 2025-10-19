@@ -32,8 +32,20 @@ url = "https://epicsusgames.ru/login.php"
 
 platform = pf.system()
 
+def create_key():
+    key = Fernet.generate_key()
+
+    folder_path = f'{os.environ['USERPROFILE']}\\.aydar' if platform == "Windows" else f'{os.environ['HOME']}/.aydar'
+    key_path = f'{os.environ['USERPROFILE']}\\.aydar\\aydarkey' if platform == "Windows" else f'{os.environ['HOME']}/.aydar/aydarkey'
+
+    if not os.path.exists(key_path):
+        os.mkdir(folder_path)
+    with open(key_path, "w", encoding='utf-8') as file:
+        file.write(key.decode())
+
 def read_key():
-    key_path = f'{os.environ['USERPROFILE']}\\.aydar\\aydarkey' if platform == "Windows" else '~/.aydar/aydarkey'
+    folder_path = f'{os.environ['USERPROFILE']}\\.aydar' if platform == "Windows" else f'{os.environ['HOME']}/.aydar'
+    key_path = f'{os.environ['USERPROFILE']}\\.aydar\\aydarkey' if platform == "Windows" else f'{os.environ['HOME']}/.aydar/aydarkey'
     if os.path.exists(key_path):
         with open(key_path, "rb") as file:
             key = file.read()
@@ -44,17 +56,6 @@ def read_key():
 
 key = read_key()
 cipher = Fernet(key)
-
-def create_key():
-    key = Fernet.generate_key()
-
-    folder_path = f'{os.environ['USERPROFILE']}\\.aydar' if platform == "Windows" else '~/.aydar'
-    key_path = f'{os.environ['USERPROFILE']}\\.aydar\\aydarkey' if platform == "Windows" else '~/.aydar/aydarkey'
-
-    if not os.path.exists(folder_path):
-        os.mkdir(folder_path)
-    with open(key_path, "w", encoding='utf-8') as file:
-        file.write(key.decode())
 
 def encrypt_data(email, password, cookie):
     encpass = cipher.encrypt(password.encode())

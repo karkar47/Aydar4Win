@@ -1,9 +1,9 @@
 from utils.config_manager import IgnoreUpdates, Version, UpdateURL, Platform
-import os
+# import os
 import requests
 import webbrowser
-from zipfile import ZipFile
-from io import BytesIO
+# from zipfile import ZipFile
+# from io import BytesIO
 from elevate import elevate
 from tkinter import messagebox
 

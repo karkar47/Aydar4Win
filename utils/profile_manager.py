@@ -62,8 +62,8 @@ def start_profile(platform, name, proton_folder):
         os.startfile(yaica_path_win)
     else:
         if proton_folder != '' and proton_folder != None:
-            yaica_cmd_path_lin = f"export STEAM_COMPAT_CLIENT_INSTALL_PATH=~/.local/share/Steam/ && export STEAM_COMPAT_DATA_PATH=~/.local/share/Steam/steamapps/compatdata && ~/.local/share/Steam/steamapps/common/'{proton_folder}'/proton run profiles/'{name}'/'Яйцеоды 2.exe'"
-            os.startfile(yaica_cmd_path_lin)
+            yaica_cmd_path_lin = f"export STEAM_COMPAT_CLIENT_INSTALL_PATH={os.environ["HOME"]}/.local/share/Steam/ && export STEAM_COMPAT_DATA_PATH={os.environ["HOME"]}/.local/share/Steam/steamapps/compatdata && {os.environ["HOME"]}/.local/share/Steam/steamapps/common/'{proton_folder}'/proton run profiles/'{name}'/'Яйцеоды 2.exe'"
+            os.system(yaica_cmd_path_lin)
         else:
             print('proton root folder empty')
 
@@ -73,8 +73,8 @@ def open_profile_mods_folder(platform, id):
         folder2open = f'profiles\\{id}\\mods\\'
         os.startfile(folder2open)
     else:
-        folder2open = f'/profile/{id}/mods/'
-        os.popen(["xdg-open", folder2open])
+        folder2open = f'profiles/{id}/mods/'
+        os.popen(f"xdg-open {folder2open}")
 
 def save_chosen_icon(path2image, profile):
     profile_mgr.set(profile, 'path2image', path2image)

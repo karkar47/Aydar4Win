@@ -1,13 +1,12 @@
-# Тут лазить можно. (Низкий уровень опасности)
 [DEFAULT]
 isWelcomeWorked = False
 isPythonFile = False
 IgnoreUpdates = False
 Version = 0.2.4
-ProtonFolder = 
+ProtonFolder = Proton 9.0 (Beta)
 
 [USERPROFILE]
-UserName = Egg
+UserName = Eggg
 UserTheme = light
 UserColor = green
 
