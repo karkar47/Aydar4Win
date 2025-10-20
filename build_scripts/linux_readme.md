@@ -1,0 +1,1 @@
+запускать командой ./build_scripts/linux_pyinstaller.sh из папки Aydar(Не build_scripts, а Aydar!!!).

@@ -3,10 +3,10 @@ isWelcomeWorked = False
 isPythonFile = False
 IgnoreUpdates = False
 Version = 0.2.4
-ProtonFolder = Proton 9.0 (Beta)
+ProtonFolder =
 
 [USERPROFILE]
-UserName = Eggg
+UserName = Egg
 UserTheme = light
 UserColor = green
 

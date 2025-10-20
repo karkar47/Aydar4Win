@@ -14,17 +14,19 @@ class Aydar(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        execfile_ext = 'exe' if Platform == "Windows" else 'elf'
+        # execfile_ext = '.exe' if Platform == 'Windows' else ''
 
         if isWelcomeWorked == False:
             try:
-                os.startfile(f"welcome.{execfile_ext}")
+                welcome_path = 'welcome.exe' if Platform == 'Windows' else './welcome'
+                os.system(welcome_path)
                 os._exit(os.EX_OK)
             except:
                 print("Welcome not found!")
 
         try:
-            os.startfile(f"updater.{execfile_ext}")
+            updater_path = 'updater.exe' if Platform == 'Windows' else './updater'
+            os.system(updater_path)
         except:
             print("Updater not found!")
 
