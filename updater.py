@@ -4,7 +4,7 @@ import requests
 import webbrowser
 # from zipfile import ZipFile
 # from io import BytesIO
-from elevate import elevate
+# elev
 from tkinter import messagebox
 
 DoneUpdateURL = UpdateURL + Version + '/win64.zip' if Platform == 'Windows' else '/lin64.zip'
@@ -26,15 +26,17 @@ def check_for_updates():
         return False
 
 def try_update():
-    dialog_answer = messagebox.askyesno("Обнова прилетела!", "Хотите обновиться?")
+    if not IgnoreUpdates:
+
+        dialog_answer = messagebox.askyesno("Обнова прилетела!", "Хотите обновиться?")
     # upd_resp = requests.get(DoneUpdateURL)
-    if dialog_answer:
-        warning_message = messagebox.askyesno("^_^", 'По нажатию кнопки "Да" вы будете переведены на страницу релизов Aydar.\nЭто сделано так, потому что функция автоматического обновления ещё в разработке.\nСпасибо, что остаетесь с нами!')
+        if dialog_answer:
+            warning_message = messagebox.askyesno("^_^", 'По нажатию кнопки "Да" вы будете переведены на страницу релизов Aydar.\nЭто сделано так, потому что функция автоматического обновления ещё в разработке.\nСпасибо, что остаетесь с нами!')
 
-    if warning_message and not IgnoreUpdates:
-        webbrowser.open_new(ReleaseURL)
+        if warning_message and not IgnoreUpdates:
+            webbrowser.open_new(ReleaseURL)
 
-        # elevate()
+        # elev
 
         # command = 'taskkill /f /im aydar.exe' if Platform == 'Windows' else 'pkill -9 aydar'
         # os.system(command)

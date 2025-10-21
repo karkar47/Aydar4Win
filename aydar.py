@@ -25,8 +25,11 @@ class Aydar(ctk.CTk):
                 print("Welcome not found!")
 
         try:
-            updater_path = 'updater.exe' if Platform == 'Windows' else './updater'
-            os.system(updater_path)
+            updater_path = 'updater.exe' if Platform == 'Windows' else 'updater'
+            updater_command = 'updater.exe' if Platform == 'Windows' else './updater'
+            if os.path.exists(updater_path):
+                os.system(updater_command)
+                print('Updater started!')
         except:
             print("Updater not found!")
 
@@ -35,10 +38,11 @@ class Aydar(ctk.CTk):
         self.geometry("800x600")
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
-
-        # self.iconbitmap("media/icons/ico/aydar-200x200-user.ico")
-        img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-user.png"))
-        self.iconphoto(False, img)
+        if Platform == 'Windows':
+            self.iconbitmap("media/icons/ico/aydar-200x200-user.ico")
+        else:
+            img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-user.png"))
+            self.iconphoto(False, img)
 
 
         ctk.set_appearance_mode(UserTheme)
@@ -208,8 +212,11 @@ class Aydar(ctk.CTk):
         # Костыль
         # add_profile_window.after(200, lambda: add_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
 
-        img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-plus.png"))
-        add_profile_window.iconphoto(False, img)        
+        if Platform == 'Windows':
+            add_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico")
+        else:
+            img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-plus.png"))
+            add_profile_window.iconphoto(False, img)       
         
         # Поля для ввода
         name_label = ctk.CTkLabel(add_profile_window, text="Имя профиля:")
@@ -230,6 +237,7 @@ class Aydar(ctk.CTk):
                 self.add_profile_to_grid(name, 'default', f'apid{number_of_profiles + 1:03d}')
                 wait_label.pack(pady=3)
                 name_entry.configure(state='disabled')
+                save_button.configure(state='disabled')
                 add_profile_window.protocol('WM_DELETE_WINDOW', on_close_warning)
 
                 create_profile(name, 'default', DownloadURL)
@@ -268,8 +276,11 @@ class Aydar(ctk.CTk):
         # Костыль
         # rename_profile_window.after(200, lambda: rename_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
 
-        img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-plus.png"))
-        rename_profile_window.iconphoto(False, img)
+        if Platform == 'Windows':
+            rename_profile_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico")
+        else:
+            img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-plus.png"))
+            rename_profile_window.iconphoto(False, img)
         
         # Поля для ввода
         name_label = ctk.CTkLabel(rename_profile_window, text="Новое имя профиля:")
@@ -324,8 +335,11 @@ class Aydar(ctk.CTk):
         # Костыль
         # account_window.after(200, lambda: account_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico"))
 
-        img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-plus.png"))
-        account_window.iconphoto(False, img)
+        if Platform == 'Windows':
+            account_window.iconbitmap("media/icons/ico/aydar-200x200-plus.ico")
+        else:
+            img = ImageTk.PhotoImage(Image.open("media/icons/png/aydar-200x200-plus.png"))
+            account_window.iconphoto(False, img)
 
         if is_logined_already:
             pass
@@ -387,5 +401,6 @@ class Aydar(ctk.CTk):
 
 
 if __name__ == '__main__':
+    multiprocessing.freeze_support()
     app = Aydar()
     app.mainloop()

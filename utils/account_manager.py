@@ -131,7 +131,7 @@ def open_account():
         request.headers['sec-ch-ua-platform'] = '"Windows"' # Чтобы уж точно все было без палева
         request.headers['sec-ch-ua'] = '"Chrome";v=136' # Браузер тоже 
 
-    window = webview.create_window('Профиль', 'https://epicsusgames.ru/profile')
+    window = webview.create_window('Аккаунт в системе EpicSUS', 'https://epicsusgames.ru/profile')
     window.events.loaded += set_cookies
     window.events.request_sent += on_request_sent
 

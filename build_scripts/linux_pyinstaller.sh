@@ -1,5 +1,5 @@
 user=$(whoami)
-pyinstaller --noconfirm --onedir --windowed --icon "/home/$user/Aydar/media/icons/ico/aydar-200x200-user.ico" --hide-console "hide-early" --collect-all customtkinter --collect-all io --collect-all zipfile --hidden-import='PIL._tkinter_finder' --distpath build_out --workpath build_works --specpath build_works/aydar  "/home/$user/Aydar/aydar.py"
+pyinstaller --noconfirm --onedir --windowed --icon "/home/$user/Aydar/media/icons/ico/aydar-200x200-user.ico" --hide-console "hide-early" --collect-all customtkinter --collect-all io --collect-all zipfile  --collect-all elevate --hidden-import='PIL._tkinter_finder' --distpath build_out --workpath build_works --specpath build_works/aydar  "/home/$user/Aydar/aydar.py"
 pyinstaller --noconfirm --onedir --windowed --icon "/home/$user/Aydar/media/icons/ico/aydar-200x200-user.ico" --hide-console "hide-early" --hidden-import='PIL._tkinter_finder' --distpath build_out --workpath build_works --specpath build_works/updater  "/home/$user/Aydar/updater.py"
 pyinstaller --noconfirm --onedir --windowed --icon "/home/$user/Aydar/media/icons/ico/aydar-200x200-user.ico" --hide-console "hide-early" --collect-all customtkinter --hidden-import='PIL._tkinter_finder' --distpath build_out --workpath build_works --specpath build_works/welcome  "/home/$user/Aydar/welcome.py"
 
