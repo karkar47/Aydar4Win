@@ -240,6 +240,7 @@ class Aydar(ctk.CTk):
                 name_entry.configure(state='disabled')
                 save_button.configure(state='disabled')
                 add_profile_window.protocol('WM_DELETE_WINDOW', on_close_warning)
+                # self.protocol('WM_DELETE_WINDOW', on_close_warning)
 
                 create_profile(name, 'default', DownloadURL)
                 add_profile_window.destroy()
@@ -389,7 +390,7 @@ class Aydar(ctk.CTk):
 
     def on_doubleclick(self, id):
         start_results = start_profile(Platform, id, ProtonFolder)
-        if not start_results:
+        if start_results == False:
             messagebox.showerror('Ошибка', 'Проверьте целостность файлов профиля или наличие steam proton.')
     
     def activate_sidebar_buttons(self):

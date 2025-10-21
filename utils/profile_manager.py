@@ -60,10 +60,12 @@ def start_profile(platform, name, proton_folder):
     if platform == "Windows":
         yaica_path_win = f'profiles\\{name}\\Яйцеоды 2.exe'
         os.startfile(yaica_path_win)
+        return True
     else:
-        if proton_folder != '' and proton_folder != None:
+        if proton_folder != '':
             yaica_cmd_path_lin = f"export STEAM_COMPAT_CLIENT_INSTALL_PATH={os.environ["HOME"]}/.local/share/Steam/ && export STEAM_COMPAT_DATA_PATH={os.environ["HOME"]}/.local/share/Steam/steamapps/compatdata && {os.environ["HOME"]}/.local/share/Steam/steamapps/common/'{proton_folder}'/proton run profiles/'{name}'/'Яйцеоды 2.exe'"
             os.system(yaica_cmd_path_lin)
+            return True
         else:
             print('proton root folder empty')
             return False
