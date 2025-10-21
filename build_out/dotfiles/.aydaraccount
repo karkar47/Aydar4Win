@@ -1,0 +1,11 @@
+[DEFAULT]
+BlockTrollVideo = True
+DevMode = False
+
+[ACCOUNT]
+AccountCookie =
+AccountName =
+is_logined_already = False
+AccountPass =
+AccountEmail =
+

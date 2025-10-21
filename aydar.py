@@ -19,8 +19,9 @@ class Aydar(ctk.CTk):
         if isWelcomeWorked == False:
             try:
                 welcome_path = 'welcome.exe' if Platform == 'Windows' else './welcome'
-                os.system(welcome_path)
-                os._exit(os.EX_OK)
+                if os.path.exists(welcome_path):
+                    os.system(welcome_path)
+                    os._exit(os.EX_OK)
             except:
                 print("Welcome not found!")
 
@@ -247,15 +248,15 @@ class Aydar(ctk.CTk):
         save_button.pack(pady=5)
     
     def set_icon_window(self):
-        file_types = [("Set icons", "*.png;*.jpg;*.jpeg;*.gif")]
+        file_types = [("Иконки", "*.png *.jpg *.jpeg *.gif")]
         filedialog = ctk.filedialog.askopenfile(mode='r', filetypes=file_types)
-        
-        save_chosen_icon(filedialog.name, self.selected_profile.id)
+        if filedialog:
+            save_chosen_icon(filedialog.name, self.selected_profile.id)
 
-        image = ctk.CTkImage(light_image=Image.open(f'{filedialog.name}'), size=(100, 100))
+            image = ctk.CTkImage(light_image=Image.open(f'{filedialog.name}'), size=(100, 100))
 
-        profile_image = self.selected_profile.image
-        profile_image.configure(image=image)
+            profile_image = self.selected_profile.image
+            profile_image.configure(image=image)
 
     def delete_profile_window_vanila(self, profile):
         dialog_answer = messagebox.askyesno("Удаление профиля", "Вы уверены, что хотите удалить профиль?")
@@ -387,7 +388,9 @@ class Aydar(ctk.CTk):
                 break
 
     def on_doubleclick(self, id):
-        start_profile(Platform, id, ProtonFolder)
+        start_results = start_profile(Platform, id, ProtonFolder)
+        if not start_results:
+            messagebox.showerror('Ошибка', 'Проверьте целостность файлов профиля или наличие steam proton.')
     
     def activate_sidebar_buttons(self):
         # if self.start_profile_btn.cget('state') != 'normal':

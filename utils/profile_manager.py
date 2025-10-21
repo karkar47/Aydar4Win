@@ -66,6 +66,7 @@ def start_profile(platform, name, proton_folder):
             os.system(yaica_cmd_path_lin)
         else:
             print('proton root folder empty')
+            return False
 
 def open_profile_mods_folder(platform, id):
     

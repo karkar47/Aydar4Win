@@ -1,0 +1,16 @@
+[DEFAULT]
+isWelcomeWorked = False
+isPythonFile = False
+IgnoreUpdates = False
+Version = 0.2.4
+ProtonFolder =
+
+[USERPROFILE]
+UserName = Egg
+UserTheme = light
+UserColor = green
+
+[SERVERS]
+DownloadURL = http://epicsusgames.ru/games/Яйцеоды2.zip
+UpdateURL = https://github.com/karkar47/Aydar4Win/releases/download/Aydar-v
+
